@@ -893,7 +893,7 @@ $page[1] = (isset($page[1]) ? $page[1] : null);
 $page[2] = (isset($page[2]) ? $page[2] : null);
 
 if (preg_match('/=/', $page[0])) {
-    $tmppage = split("=", $page[0], 2);
+    $tmppage = explode('=', $page[0], 2);
     $page[0] = trim($tmppage[0]);
     $pageparam = trim($tmppage[1]);
 } else $pageparam = null;
