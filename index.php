@@ -970,7 +970,7 @@ switch($page[0])
 	    $query = "SELECT * FROM ".db_tablename('quotes')." WHERE queue=0 ORDER BY id DESC LIMIT ".$limit;
 	    if (isset($_SESSION['lastvisit'])) {
 		$nlatest = $db->getOne("SELECT count(1) FROM ".db_tablename('quotes')." WHERE queue=0 AND date>=".$_SESSION['lastvisit']);
-		if (($nlatest >= 3) && ($nlatest <= $CONFIG['quote_list_limit'])) {
+		if (($nlatest >= $CONFIG['min_latest']) && ($nlatest <= $CONFIG['quote_list_limit'])) {
 		    $query = "SELECT * FROM ".db_tablename('quotes')." WHERE queue=0 AND date>=".$_SESSION['lastvisit']." ORDER BY id DESC";
 		}
 	    }
