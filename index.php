@@ -62,7 +62,7 @@ $dsn = array(
 	     );
 $db =& DB::connect($dsn);
 if (DB::isError($db)) {
-    $TEMPLATE->printheader();
+    $TEMPLATE->printheader('Error');
     print $db->getMessage();
     $TEMPLATE->printfooter();
     exit;
