@@ -1052,6 +1052,8 @@ switch($page[0])
 		    $title = "#${idlist[0]}";
 		}
 		quote_generation($query, $title, -1);
+	    } else if ($_SERVER['QUERY_STRING']) {
+		search('search', $_SERVER['QUERY_STRING']);
 	    } else {
 		home_generation();
 	    }
