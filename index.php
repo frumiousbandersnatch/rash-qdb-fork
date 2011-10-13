@@ -492,7 +492,7 @@ function username_exists($name)
     return FALSE;
 }
 
-function check_username($username)
+function check_username($username, $check_exist=1)
 {
     global $TEMPLATE;
     if (!preg_match('/^[a-zA-Z0-9_]+$/', $username)) {
@@ -501,7 +501,7 @@ function check_username($username)
 	$TEMPLATE->add_message(lang('username_too_short'));
     } else if (strlen($username) > 20) {
 	$TEMPLATE->add_message(lang('username_too_long'));
-    } else if (username_exists($username)) {
+    } else if ($check_exist && username_exists($username)) {
 	$TEMPLATE->add_message(lang('username_exists'));
     } else {
 	return TRUE;
@@ -599,9 +599,9 @@ function edit_users($method, $who)
 	}
     } else if ($method == 'update') {	// parse the info from $method == 'edit' into the database
 	$user = trim($_POST['user']);
-	if (check_username($user)) {
+	if (check_username($user, 0)) {
 	    $db->query("UPDATE ".db_tablename('users')." SET user=".$db->quote($user).", level=".$db->quote((int)$_POST['level'])." WHERE id=".$db->quote((int)$who));
-	    if($_POST['password']) {
+	    if ($_POST['password']) {
 		$salt = "\$1\$".str_rand()."\$";
 		$db->query("UPDATE ".db_tablename('users')." SET `password`='".crypt($_POST['password'], $salt)."', salt='".$salt."' WHERE id=".$db->quote((int)$who));
 	    }
@@ -1052,6 +1052,8 @@ switch($page[0])
 		    $title = "#${idlist[0]}";
 		}
 		quote_generation($query, $title, -1);
+	    } else if ($_SERVER['QUERY_STRING']) {
+		search('search', $_SERVER['QUERY_STRING']);
 	    } else {
 		home_generation();
 	    }
