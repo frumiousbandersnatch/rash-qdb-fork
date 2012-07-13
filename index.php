@@ -47,7 +47,7 @@ date_default_timezone_set($CONFIG['timezone']);
 if (isset($_COOKIE['lastvisit']) && !isset($_SESSION['lastvisit'])) {
     $_SESSION['lastvisit'] = $_COOKIE['lastvisit'];
 }
-mk_cookie('lastvisit', mktime());
+mk_cookie('lastvisit', time());
 
 set_voteip($CONFIG['secret_salt']);
 
@@ -1053,7 +1053,7 @@ switch($page[0])
 		}
 		quote_generation($query, $title, -1);
 	    } else if ($_SERVER['QUERY_STRING']) {
-		search('search', $_SERVER['QUERY_STRING']);
+		search('search', urldecode($_SERVER['QUERY_STRING']));
 	    } else {
 		home_generation();
 	    }

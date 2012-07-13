@@ -136,9 +136,13 @@ abstract class BaseTemplate {
 
     function main_page($news)
     {
-	return '<div id="home_all"><div id="news">'.$news.
-        '<div class="show_all_news"><a href="?'.urlargs('news').'">'.lang('news_show_all').'</a></div></div>
-        <div id="home_greeting">'.lang('home_greeting').'</div></div>';
+	$str = '<div id="home_all"><div id="news">'.$news;
+	if ($news) {
+	    $str .= '<div class="show_all_news"><a href="?'.urlargs('news').'">'.lang('news_show_all').'</a></div>';
+	}
+	$str .= '</div>';
+        $str .= '<div id="home_greeting">'.lang('home_greeting').'</div></div>';
+	return $str;
     }
 
     function add_quote_preview($quotetxt)
